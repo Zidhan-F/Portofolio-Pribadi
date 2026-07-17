@@ -157,12 +157,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = 'Mengirim...';
                 submitBtn.disabled = true;
                 
-                setTimeout(() => {
+                const formData = new FormData(contactForm);
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                    successFeedback.style.display = 'block';
-                    contactForm.reset();
-                }, 1200);
+                    if (response.ok) {
+                        successFeedback.style.display = 'block';
+                        contactForm.reset();
+                    } else {
+                        alert('Oops! Terjadi masalah saat mengirim pesan Anda.');
+                    }
+                })
+                .catch(error => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    alert('Oops! Terjadi masalah koneksi saat mengirim pesan Anda.');
+                });
             }
         });
     }
