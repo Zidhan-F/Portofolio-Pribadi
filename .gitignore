@@ -1,0 +1,24 @@
+# Gemini IDE & Workspace artifacts
+.agents/
+.gemini/
+*.log
+scratch/
+implementation_plan.md
+walkthrough.md
+task.md
+portfolio_preview*
+portfolio_final_check*
+initial_hero_section*
+hero_section_view*
+hero_section_dark_theme*
+terminal_help_output*
+terminal_centered*
+terminal_help_response*
+terminal_about_response*
+terminal_about_output*
+terminal_about_output_verified*
+projects_tabs_view*
+projects_payroll_fitur_utama*
+*.webp
+*.png
+!profile-photo.png
