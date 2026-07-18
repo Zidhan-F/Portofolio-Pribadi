@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Link to your sitemap (update this URL if you use a custom domain)
-Sitemap: https://zidhan-f.github.io/sitemap.xml
+# Link to your sitemap
+Sitemap: https://zidhan-f.github.io/Portofolio-Pribadi/sitemap.xml
