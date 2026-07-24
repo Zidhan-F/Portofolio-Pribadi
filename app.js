@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }</pre>`;
                         break;
                     case 'contact':
-                        responseLine.innerHTML = `Email: <span class="text-highlight">muzidhan@gmail.com</span><br>Phone: (+62) 812-1878-4571<br>GitHub: <span class="text-highlight">github.com/Zidhan-F</span><br>Location: Jakarta Barat, Indonesia`;
+                        responseLine.innerHTML = `Email: <span class="text-highlight">muzidhan@gmail.com</span><br>Phone: (+62) 812-1878-4571<br>GitHub: <span class="text-highlight">github.com/Zidhan-F</span><br>LinkedIn: <span class="text-highlight">linkedin.com/in/muhammadzidhanfadillah</span><br>Location: Jakarta Barat, Indonesia`;
                         break;
                     case 'experience':
                         responseLine.innerHTML = `1. <span class="text-highlight">PT Dinamika Agung</span> — Junior Web Developer (Internship)<br>   Apr 2026 - Jul 2026 | Fullstack Payroll System<br>2. <span class="text-highlight">Favehotel LTC Glodok</span> — Housekeeping Attendant<br>   Mar 2023 - Apr 2026<br>3. <span class="text-highlight">Jayakarta Hotels</span> — Room Attendant (Part-time)<br>   Jan 2023 - Mar 2023`;
