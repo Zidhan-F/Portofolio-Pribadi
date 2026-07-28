@@ -45,48 +45,68 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Muhammad Zidhan Fadillah",
-      "alternateName": "Zidhan Fadillah",
-      "jobTitle": "Junior Web Developer",
-      "description": "Junior Web Developer dan Mahasiswa S1 Teknik Informatika di Universitas Dian Nusantara yang berfokus pada pengembangan web fullstack menggunakan MERN Stack dan CodeIgniter 4.",
-      "image": {
-        "@type": "ImageObject",
-        "url": "https://zidhan-f.github.io/Portofolio-Pribadi/profile-photo.jpeg",
-        "caption": "Muhammad Zidhan Fadillah - Junior Web Developer"
-      },
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Universitas Dian Nusantara",
-        "sameAs": "https://undira.ac.id"
-      },
-      "worksFor": {
-        "@type": "Organization",
-        "name": "PT Dinamika Agung"
-      },
-      "url": "https://zidhan-f.github.io/Portofolio-Pribadi/",
-      "sameAs": [
-        "https://github.com/Zidhan-F",
-        "https://www.linkedin.com/in/muhammadzidhanfadillah/",
-        "https://www.instagram.com/zidhn_f/"
-      ],
-      "knowsAbout": [
-        "Web Development",
-        "MERN Stack",
-        "Node.js",
-        "React.js",
-        "CodeIgniter 4",
-        "PHP",
-        "MySQL",
-        "MongoDB",
-        "Fullstack Web Development"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Jakarta Barat",
-        "addressRegion": "DKI Jakarta",
-        "addressCountry": "Indonesia"
-      }
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": "https://zidhan-f.github.io/Portofolio-Pribadi/#profilepage",
+          "url": "https://zidhan-f.github.io/Portofolio-Pribadi/",
+          "name": "Muhammad Zidhan Fadillah | Portfolio & Profile",
+          "mainEntity": {
+            "@id": "https://zidhan-f.github.io/Portofolio-Pribadi/#person"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://zidhan-f.github.io/Portofolio-Pribadi/#person",
+          "name": "Muhammad Zidhan Fadillah",
+          "alternateName": ["Zidhan Fadillah", "Muhammad Zidhan"],
+          "jobTitle": "Junior Web Developer",
+          "description": "Junior Web Developer dan Mahasiswa S1 Teknik Informatika di Universitas Dian Nusantara yang berfokus pada pengembangan web fullstack menggunakan MERN Stack dan CodeIgniter 4.",
+          "image": {
+            "@type": "ImageObject",
+            "@id": "https://zidhan-f.github.io/Portofolio-Pribadi/profile-photo.jpeg",
+            "url": "https://zidhan-f.github.io/Portofolio-Pribadi/profile-photo.jpeg",
+            "caption": "Muhammad Zidhan Fadillah - Junior Web Developer"
+          },
+          "url": "https://zidhan-f.github.io/Portofolio-Pribadi/",
+          "sameAs": [
+            "https://www.linkedin.com/in/muhammadzidhanfadillah/",
+            "https://github.com/Zidhan-F",
+            "https://www.instagram.com/zidhn_f/"
+          ],
+          "subjectOf": {
+            "@type": "WebPage",
+            "url": "https://www.linkedin.com/in/muhammadzidhanfadillah/",
+            "name": "Muhammad Zidhan Fadillah LinkedIn Profile"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Universitas Dian Nusantara",
+            "sameAs": "https://undira.ac.id"
+          },
+          "worksFor": {
+            "@type": "Organization",
+            "name": "PT Dinamika Agung"
+          },
+          "knowsAbout": [
+            "Web Development",
+            "MERN Stack",
+            "Node.js",
+            "React.js",
+            "CodeIgniter 4",
+            "PHP",
+            "MySQL",
+            "MongoDB",
+            "Fullstack Web Development"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jakarta Barat",
+            "addressRegion": "DKI Jakarta",
+            "addressCountry": "Indonesia"
+          }
+        }
+      ]
     }
     </script>
 </head>
