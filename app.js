@@ -3,22 +3,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 1. Theme Management (Light / Dark Mode)
     // ==========================================
+    // Tema awal sudah diterapkan oleh skrip inline di <head> (mencegah kedipan).
+    const root = document.documentElement;
     const themeToggle = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    
-    if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const safeStorage = {
+        get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
+        set(key, val) { try { localStorage.setItem(key, val); } catch (e) { /* storage diblokir */ } }
+    };
+
+    const applyTheme = (theme) => {
+        if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        const isDark = theme === 'dark';
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+    };
+
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+
     themeToggle.addEventListener('click', () => {
-        const activeTheme = document.documentElement.getAttribute('data-theme');
-        if (activeTheme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        }
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        safeStorage.set('theme', next);
+    });
+
+    // Ikuti perubahan tema sistem selama pengguna belum memilih manual
+    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    darkQuery.addEventListener?.('change', (e) => {
+        if (!safeStorage.get('theme')) applyTheme(e.matches ? 'dark' : 'light');
     });
 
     // ==========================================
@@ -28,25 +41,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.getElementById('nav-links');
 
     if (hamburger && navLinks) {
+        const setMenu = (open) => {
+            hamburger.classList.toggle('active', open);
+            navLinks.classList.toggle('active', open);
+            hamburger.setAttribute('aria-expanded', String(open));
+            hamburger.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+        };
+        const isOpen = () => navLinks.classList.contains('active');
+
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
+            setMenu(!isOpen());
+            if (isOpen()) navLinks.querySelector('.nav-link')?.focus();
         });
 
-        // Close menu when a nav link is clicked
         navLinks.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+            link.addEventListener('click', () => setMenu(false));
         });
 
-        // Close menu on outside click
         document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+            if (isOpen() && !hamburger.contains(e.target) && !navLinks.contains(e.target)) setMenu(false);
+        });
+
+        // Escape menutup menu dan mengembalikan fokus ke tombol
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isOpen()) {
+                setMenu(false);
+                hamburger.focus();
             }
+        });
+
+        // Reset saat layar diperlebar melewati breakpoint mobile
+        window.matchMedia('(min-width: 769px)').addEventListener?.('change', (e) => {
+            if (e.matches) setMenu(false);
         });
     }
 
@@ -71,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const snippets = document.querySelectorAll('.code-snippet');
     
-    if (snippets.length > 0 && window.innerWidth > 768) {
+    if (snippets.length > 0 && window.innerWidth > 768 && !prefersReducedMotion) {
         window.addEventListener('mousemove', (e) => {
             const mouseX = e.clientX / window.innerWidth;
             const mouseY = e.clientY / window.innerHeight;
@@ -90,26 +116,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const tabContainers = document.querySelectorAll('.tab-container');
     
+    // Pola ARIA Tabs: roving tabindex + navigasi panah, Home, End.
     tabContainers.forEach(container => {
-        const tabBtns = container.querySelectorAll('.tab-btn');
+        const tabBtns = Array.from(container.querySelectorAll('.tab-btn'));
         const tabPanels = container.querySelectorAll('.tab-panel');
-        
+
         tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetTabId = btn.getAttribute('data-tab');
-                
-                tabBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                
-                tabPanels.forEach(p => p.classList.remove('active'));
-                
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-                
-                const targetPanel = container.querySelector(`#${targetTabId}`);
-                if (targetPanel) targetPanel.classList.add('active');
+            const panelId = btn.getAttribute('data-tab');
+            const panel = container.querySelector(`#${panelId}`);
+            btn.id = btn.id || `tab-${panelId}`;
+            btn.setAttribute('aria-controls', panelId);
+            btn.tabIndex = btn.classList.contains('active') ? 0 : -1;
+            if (panel) {
+                panel.setAttribute('aria-labelledby', btn.id);
+                panel.tabIndex = 0;
+                panel.hidden = !btn.classList.contains('active');
+            }
+        });
+
+        const activate = (btn, moveFocus) => {
+            tabBtns.forEach(b => {
+                const selected = b === btn;
+                b.classList.toggle('active', selected);
+                b.setAttribute('aria-selected', String(selected));
+                b.tabIndex = selected ? 0 : -1;
+            });
+            tabPanels.forEach(p => {
+                const show = p.id === btn.getAttribute('data-tab');
+                p.classList.toggle('active', show);
+                p.hidden = !show;
+            });
+            if (moveFocus) btn.focus();
+        };
+
+        tabBtns.forEach((btn, i) => {
+            btn.addEventListener('click', () => activate(btn, false));
+            btn.addEventListener('keydown', (e) => {
+                let next = null;
+                if (e.key === 'ArrowRight') next = tabBtns[(i + 1) % tabBtns.length];
+                else if (e.key === 'ArrowLeft') next = tabBtns[(i - 1 + tabBtns.length) % tabBtns.length];
+                else if (e.key === 'Home') next = tabBtns[0];
+                else if (e.key === 'End') next = tabBtns[tabBtns.length - 1];
+                if (next) {
+                    e.preventDefault();
+                    activate(next, true);
+                }
             });
         });
     });
@@ -119,38 +170,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const contactForm = document.getElementById('portfolio-contact-form');
     const successFeedback = document.getElementById('form-success-feedback');
-    
+    const errorFeedback = document.getElementById('form-error-feedback');
+
     if (contactForm) {
+        const nameInput = document.getElementById('input-name');
+        const emailInput = document.getElementById('input-email');
+        const messageInput = document.getElementById('input-message');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const rules = [
+            [nameInput, v => v.length > 0],
+            [emailInput, v => emailPattern.test(v)],
+            [messageInput, v => v.length > 0]
+        ];
+
+        const validateField = (input, test) => {
+            const ok = test(input.value.trim());
+            input.closest('.form-group').classList.toggle('invalid', !ok);
+            input.setAttribute('aria-invalid', String(!ok));
+            return ok;
+        };
+
+        // Setelah ada error, validasi ulang saat pengguna memperbaikinya
+        rules.forEach(([input, test]) => {
+            input.addEventListener('input', () => {
+                if (input.getAttribute('aria-invalid') === 'true') validateField(input, test);
+            });
+        });
+
+        const showFeedback = (el) => {
+            [successFeedback, errorFeedback].forEach(f => f.classList.remove('visible'));
+            if (el) {
+                el.classList.add('visible');
+                el.focus();
+            }
+        };
+
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            const nameInput = document.getElementById('input-name');
-            const emailInput = document.getElementById('input-email');
-            const messageInput = document.getElementById('input-message');
-            
-            let isValid = true;
-            
-            document.querySelectorAll('.form-group').forEach(group => {
-                group.classList.remove('invalid');
-            });
-            successFeedback.style.display = 'none';
-            
-            if (!nameInput.value.trim()) {
-                nameInput.closest('.form-group').classList.add('invalid');
-                isValid = false;
-            }
-            
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
-                emailInput.closest('.form-group').classList.add('invalid');
-                isValid = false;
-            }
-            
-            if (!messageInput.value.trim()) {
-                messageInput.closest('.form-group').classList.add('invalid');
-                isValid = false;
-            }
-            
+            showFeedback(null);
+
+            const invalid = rules.filter(([input, test]) => !validateField(input, test));
+            const isValid = invalid.length === 0;
+            if (!isValid) invalid[0][0].focus();
+
             if (isValid) {
                 const submitBtn = document.getElementById('btn-submit-form');
                 const originalText = submitBtn.textContent;
@@ -169,16 +232,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
                     if (response.ok) {
-                        successFeedback.style.display = 'block';
                         contactForm.reset();
+                        showFeedback(successFeedback);
                     } else {
-                        alert('Oops! Terjadi masalah saat mengirim pesan Anda.');
+                        showFeedback(errorFeedback);
                     }
                 })
-                .catch(error => {
+                .catch(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                    alert('Oops! Terjadi masalah koneksi saat mengirim pesan Anda.');
+                    showFeedback(errorFeedback);
                 });
             }
         });
@@ -272,10 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             allNavLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${activeId}`) {
-                    link.classList.add('active');
-                }
+                const current = link.getAttribute('href') === `#${activeId}`;
+                link.classList.toggle('active', current);
+                if (current) link.setAttribute('aria-current', 'true');
+                else link.removeAttribute('aria-current');
             });
         };
 
@@ -309,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const counters = document.querySelectorAll('[data-count]');
 
-    if (counters.length > 0) {
+    if (counters.length > 0 && !prefersReducedMotion) {
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
