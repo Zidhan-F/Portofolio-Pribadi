@@ -1482,3 +1482,28 @@ body {
 }
 
 .inline-link:hover { text-decoration-thickness: 2px; }
+
+/* ===========================
+   Sedang Didalami (minat belajar)
+   Border putus-putus membedakannya dari skill yang sudah dikuasai.
+   =========================== */
+.learning-skills {
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.learning-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: -0.5rem 0 1rem;
+}
+
+ul.skill-tags { list-style: none; }
+
+.skill-tag-learning {
+    background-color: transparent;
+    border-style: dashed;
+    border-color: var(--border-strong);
+}
