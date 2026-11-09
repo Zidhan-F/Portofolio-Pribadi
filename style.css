@@ -1471,3 +1471,14 @@ body {
     .project-card { padding: 1.5rem; }
     .timeline-content { padding: 1.25rem; }
 }
+
+/* Tautan di dalam paragraf: digarisbawahi agar tidak bergantung pada warna saja */
+.inline-link {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.inline-link:hover { text-decoration-thickness: 2px; }
