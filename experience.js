@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
     reducedMotion.addEventListener('change', applyMotion);
     finePointer.addEventListener('change', resetScene);
     applyMotion();
+    const visibleModels = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+            entry.target.classList.toggle('in-view', entry.isIntersecting);
+        }
+    });
+    document.querySelectorAll('.dev-scene, .project-art').forEach(model => visibleModels.observe(model));
     scene.addEventListener('pointermove', event => {
         if (!finePointer.matches || root.classList.contains('motion-paused')) return;
         pointer = { x: event.clientX, y: event.clientY };
