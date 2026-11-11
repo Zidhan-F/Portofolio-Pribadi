@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'stack':
                         responseLine.innerHTML = `<pre style="font-family: var(--font-mono); margin: 0.25rem 0;">{
   "frontend": ["React.js", "HTML5", "CSS3", "JavaScript"],
-  "backend": ["Node.js", "Express.js", "CodeIgniter 4", "PHP"],
+  "backend": ["Node.js", "Express.js", "CodeIgniter 4", "Laravel", "PHP"],
   "database": ["MongoDB", "MySQL"]
 }</pre>`;
                         break;
