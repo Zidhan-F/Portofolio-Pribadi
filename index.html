@@ -659,17 +659,43 @@
                             <div class="facility-slab floor-plan"></div>
                             <div class="facility-slab canopy"></div>
                         </div>
-                        <span class="art-caption">FMS / LARAVEL</span>
+                        <span class="art-caption">FMS / OPERASIONAL FASILITAS</span>
                     </div>
                     <div class="project-meta">
                         <span class="project-category">Fullstack &amp; Operasional</span>
                         <h3 class="project-name">Facility Management System (FMS)</h3>
                     </div>
-                    <p class="project-desc">Aplikasi web untuk pengelolaan fasilitas yang dibangun dengan framework Laravel.</p>
-                    <ul class="tech-tags">
-                        <li>Laravel</li>
-                        <li>PHP</li>
-                    </ul>
+                    <p class="project-desc">Sistem pengelolaan fasilitas yang menghubungkan supervisor dan petugas kebersihan di berbagai cabang.</p>
+                    <div class="tab-container">
+                        <div class="tab-nav" role="tablist" aria-label="Detail Facility Management System">
+                            <button type="button" class="tab-btn active" data-tab="fms-overview" role="tab" aria-selected="true">Overview</button>
+                            <button type="button" class="tab-btn" data-tab="fms-architecture" role="tab" aria-selected="false">Architecture</button>
+                            <button type="button" class="tab-btn" data-tab="fms-stack" role="tab" aria-selected="false">Stack Detail</button>
+                        </div>
+                        <div class="tab-panel active" id="fms-overview" role="tabpanel">
+                            <ul class="tech-tags"><li>Next.js</li><li>React Native</li><li>Express</li><li>PostgreSQL</li></ul>
+                            <p class="tab-text">Supervisor memantau tugas kebersihan, inspeksi, dan stok per cabang lewat dashboard. Petugas menggunakan aplikasi seluler untuk mencatat pekerjaan dan serah terima sif.</p>
+                            <a class="inline-link" href="https://github.com/Zidhan-F/fasilitas-manajemen-sistem">Lihat kode FMS di GitHub</a>
+                        </div>
+                        <div class="tab-panel" id="fms-architecture" role="tabpanel">
+                            <div class="db-schema-visual">
+                                <div class="schema-table"><span class="table-name">Klien</span><span class="table-col">Dashboard web</span><span class="table-col">Aplikasi petugas</span></div>
+                                <span class="schema-arrow" aria-hidden="true">&rarr;</span>
+                                <div class="schema-table"><span class="table-name">REST API</span><span class="table-col">Hak akses</span><span class="table-col">Sinkronisasi</span></div>
+                                <span class="schema-arrow" aria-hidden="true">&rarr;</span>
+                                <div class="schema-table"><span class="table-name">PostgreSQL</span><span class="table-col">Data cabang</span><span class="table-col">Catatan tugas</span></div>
+                            </div>
+                            <p class="tab-text">Kedua klien mengakses API yang sama. Saat luring, aplikasi petugas mengantrekan perubahan tugas. Saat sinkronisasi, aplikasi mengirim antrean itu ke server lalu mengambil pembaruan terbaru.</p>
+                        </div>
+                        <div class="tab-panel" id="fms-stack" role="tabpanel">
+                            <div class="metrics-widget">
+                                <div class="widget-row"><span class="widget-key">Dashboard</span><span class="widget-val font-mono text-sm">Next.js · React</span></div>
+                                <div class="widget-row"><span class="widget-key">Aplikasi petugas</span><span class="widget-val font-mono text-sm">React Native · Expo</span></div>
+                                <div class="widget-row"><span class="widget-key">API</span><span class="widget-val font-mono text-sm">Node.js · Express</span></div>
+                                <div class="widget-row"><span class="widget-key">Data</span><span class="widget-val font-mono text-sm">PostgreSQL · Prisma</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </article>
 
             </div>
