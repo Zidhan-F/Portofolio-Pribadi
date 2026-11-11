@@ -52,6 +52,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="experience.css">
 
     <!-- JSON-LD Structured Data for Google SEO & AI Overview -->
     <script type="application/ld+json">
@@ -136,53 +137,7 @@
 <body>
     <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
 
-    <!-- Faint abstract background code snippets -->
-    <div class="bg-code-container" id="bg-code-container" aria-hidden="true">
-        <div class="code-snippet snippet-node" style="top: 12%; left: 4%;">
-            <pre><code>const express = require('express');
-const mongoose = require('mongoose');
-
-const app = express();
-app.use(express.json());
-
-app.get('/api/employees', async (req, res) => {
-    const employees = await Employee.find();
-    res.json({ success: true, data: employees });
-});
-
-app.listen(3000);</code></pre>
-        </div>
-        <div class="code-snippet snippet-react" style="top: 42%; right: 4%;">
-            <pre><code>import { useState, useEffect } from 'react';
-import axios from 'axios';
-
-export default function PayrollDashboard() {
-    const [payroll, setPayroll] = useState([]);
-    
-    useEffect(() => {
-        axios.get('/api/payroll')
-            .then(res => setPayroll(res.data));
-    }, []);
-
-    return &lt;PayrollTable data={payroll} /&gt;;
-}</code></pre>
-        </div>
-        <div class="code-snippet snippet-php" style="top: 72%; left: 6%;">
-            <pre><code>class PayrollController extends BaseController {
-    protected $payrollModel;
-    
-    public function calculate($employeeId) {
-        $gaji = $this->payrollModel->getGaji($employeeId);
-        $bpjs = $this->calculateBPJS($gaji);
-        $pph21 = $this->calculatePPH21($gaji);
-        
-        return $this->respond([
-            'gaji_bersih' => $gaji - $bpjs - $pph21
-        ]);
-    }
-}</code></pre>
-        </div>
-    </div>
+    <div class="reading-progress" aria-hidden="true"></div>
 
     <!-- Navigation Bar -->
     <header class="navbar" id="navbar">
@@ -241,53 +196,61 @@ export default function PayrollDashboard() {
     <!-- Main Content Container -->
     <main class="content-wrapper" id="main-content" tabindex="-1">
 
-        <!-- Hero Section -->
+        <!-- A lightweight CSS 3D scene: no WebGL or framework required. -->
         <section id="about" class="section hero-section">
-            <div class="hero-content reveal">
-                <span class="hero-tagline">PORTFOLIO - 2026</span>
-                <h1 class="hero-title">Muhammad Zidhan<br>Fadillah</h1>
-                <p class="hero-subtitle">Junior Web Developer &amp; Teknik Informatika</p>
-                <p class="hero-description">
-                    Mahasiswa S1 Teknik Informatika di Universitas Dian Nusantara yang berfokus pada pengembangan web
-                    fullstack dan founder <a href="#project-buatdokumen" class="inline-link">buatdokumen.id</a>.
-                    Berpengalaman membangun sistem Payroll enterprise dengan perhitungan Gaji, BPJS, dan PPH21.
-                    Menguasai MERN Stack dan CodeIgniter 4.
-                </p>
+            <div class="hero-content">
+                <span class="hero-tagline"><span class="availability-dot" aria-hidden="true"></span> OPEN TO WORK <span class="tagline-divider">/</span> JAKARTA, ID</span>
+                <p class="hero-intro">Halo, saya</p>
+                <h1 class="hero-title"><span class="given-name">Muhammad</span>Zidhan<br><span class="outline-name">Fadillah.</span></h1>
+                <p class="hero-subtitle">Merangkai kode.<br>Membangun pengalaman.</p>
+                <p class="hero-description">Junior Web Developer &amp; mahasiswa Teknik Informatika di Universitas Dian Nusantara. Saya membangun aplikasi fullstack dan merupakan founder <a href="#project-buatdokumen" class="inline-link">buatdokumen.id</a>.</p>
                 <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">Lihat Project</a>
-                    <a href="#contact" class="btn btn-secondary">Hubungi Saya</a>
+                    <a href="#projects" class="btn btn-primary">Jelajahi project <span aria-hidden="true"><svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>
+                    <a href="#contact" class="btn btn-secondary">Mari berkolaborasi <span aria-hidden="true"><svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>
                 </div>
+                <div class="hero-socials"><a href="https://github.com/Zidhan-F" target="_blank" rel="noopener noreferrer">GitHub <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg><span class="sr-only"> (tab baru)</span></a><a href="https://www.linkedin.com/in/muhammadzidhanfadillah/" target="_blank" rel="noopener noreferrer">LinkedIn <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg><span class="sr-only"> (tab baru)</span></a><span>IDE → CODE → EXPERIENCE</span></div>
             </div>
-            <div class="hero-visual reveal reveal-delay-1">
-                <div class="profile-photo-wrapper">
-                    <img src="profile-photo.jpeg" alt="Foto Profil Muhammad Zidhan Fadillah - Junior Web Developer &amp; Teknik Informatika" title="Muhammad Zidhan Fadillah" class="profile-photo" loading="eager" fetchpriority="high">
-                    <div class="profile-status">
-                        <span class="status-dot" aria-hidden="true"></span>
-                        Open to Work
+            <div class="hero-visual">
+                <div class="scene-heading"><span>THE DEVELOPER'S WORKSPACE</span><span aria-hidden="true">[ 01 — 03 ]</span></div>
+                <div class="dev-scene" id="dev-scene" data-layer="frontend">
+                    <div class="scene-grid" aria-hidden="true"></div>
+                    <div class="scene-orbit" aria-hidden="true"></div>
+                    <div class="scene-world" id="scene-world">
+                        <div class="glass-plate plate-back" aria-hidden="true"><span>03 / DATABASE</span><div class="plate-lines"></div></div>
+                        <div class="glass-plate plate-middle" aria-hidden="true"><span>02 / API &amp; LOGIC</span><div class="plate-lines"></div></div>
+                        <div class="workspace-card">
+                            <div class="workspace-bar"><span class="window-dots" aria-hidden="true">● ● ●</span><span>zidhan / workspace</span><span aria-hidden="true"><svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg></span></div>
+                            <div class="workspace-content">
+                                <p class="code-comment">// ideas into interfaces</p>
+                                <div class="code-line"><span>01</span>const developer = {</div>
+                                <div class="code-line"><span>02</span>&nbsp; name: <b>'Zidhan'</b>,</div>
+                                <div class="code-line"><span>03</span>&nbsp; stack: <b id="scene-stack">'React.js'</b>,</div>
+                                <div class="code-line"><span>04</span>&nbsp; passion: <b>'build &amp; learn'</b></div>
+                                <div class="code-line"><span>05</span>};<i class="code-caret" aria-hidden="true"></i></div>
+                            </div>
+                            <div class="workspace-footer"><span><span class="tiny-dot" aria-hidden="true"></span> Fullstack development</span><span>UTF-8</span></div>
+                        </div>
+                        <div class="code-cube" aria-hidden="true"><div class="cube-face cube-front">&lt;/&gt;</div><div class="cube-face cube-back">{ }</div><div class="cube-face cube-right">JS</div><div class="cube-face cube-left">API</div><div class="cube-face cube-top">ZF</div><div class="cube-face cube-bottom">01</div></div>
+                        <div class="portrait-chip"><img src="profile-thumb.webp" alt="Muhammad Zidhan Fadillah" width="48" height="48" decoding="async"><div><strong>Zidhan Fadillah</strong><span>Developer &amp; founder</span></div><span class="portrait-plus" aria-hidden="true"><svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg></span></div>
+                        <div class="floating-label" aria-hidden="true"><span><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></span> Built with curiosity.</div>
                     </div>
                 </div>
-
-                <div class="hero-metrics">
-                    <div class="metric-card">
-                        <span class="metric-num" data-count="3">3+</span>
-                        <span class="metric-label">Pengalaman Kerja</span>
-                    </div>
-                    <div class="metric-card">
-                        <span class="metric-num-static">MERN</span>
-                        <span class="metric-label">Core Stack</span>
-                    </div>
-                    <div class="metric-card">
-                        <span class="metric-num-static">S1</span>
-                        <span class="metric-label">Teknik Informatika</span>
-                    </div>
+                <div class="scene-controls" role="group" aria-label="Jelajahi lapisan tech stack">
+                    <button type="button" data-layer="frontend" aria-pressed="true">01 <span>Frontend</span></button>
+                    <button type="button" data-layer="backend" aria-pressed="false">02 <span>Backend</span></button>
+                    <button type="button" data-layer="database" aria-pressed="false">03 <span>Database</span></button>
                 </div>
+                <p class="scene-caption" id="scene-caption" aria-live="polite">React.js · Antarmuka responsif, dari ide menjadi interaksi.</p>
+                <button type="button" class="motion-toggle" id="motion-toggle" aria-pressed="false">Jeda animasi</button>
             </div>
+            <div class="hero-bottom"><a href="#projects">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a><span>PORTFOLIO / 2026</span><span>DESIGNED TO KEEP GROWING.</span></div>
         </section>
+        <div class="stack-ribbon" aria-label="Teknologi utama"><span>REACT.JS</span><i aria-hidden="true"><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></i><span>NODE.JS</span><i aria-hidden="true"><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></i><span>CODEIGNITER 4</span><i aria-hidden="true"><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></i><span>MONGODB</span><i aria-hidden="true"><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></i><span>MYSQL</span></div>
 
         <!-- Skills Section -->
         <section id="skills" class="section skills-section">
             <div class="section-header reveal">
-                <h2 class="section-title">Tech Stack &amp; Skills</h2>
+                <span class="section-eyebrow">01 / THE TOOLKIT</span><h2 class="section-title">Tools behind<br>the experience.</h2>
                 <p class="section-desc">Teknologi dan keahlian yang saya kuasai untuk membangun aplikasi web modern.</p>
             </div>
 
@@ -396,14 +359,16 @@ export default function PayrollDashboard() {
         <!-- Projects Section -->
         <section id="projects" class="section projects-section">
             <div class="section-header reveal">
-                <h2 class="section-title">Projects</h2>
+                <span class="section-eyebrow">02 / SELECTED WORK</span><h2 class="section-title">Dari ide,<br>menjadi solusi.</h2>
                 <p class="section-desc">Proyek yang telah saya kerjakan selama menjadi developer.</p>
             </div>
 
-            <div class="projects-grid">
+            <div class="project-toolbar"><div class="project-filters" role="group" aria-label="Filter proyek"><button type="button" data-filter="all" aria-pressed="true">Semua <span>03</span></button><button type="button" data-filter="product" aria-pressed="false">Produk</button><button type="button" data-filter="fullstack" aria-pressed="false">Fullstack</button></div><span id="project-count" role="status">3 proyek</span></div>
+            <div class="projects-grid" id="projects-grid">
 
                 <!-- Featured Project: buatdokumen.id -->
-                <article class="project-card project-featured reveal" id="project-buatdokumen">
+                <article class="project-card project-featured reveal" id="project-buatdokumen" data-category="product">
+                    <div class="project-art document-art" aria-hidden="true"><span class="art-label">01 / PRODUCT EXPLORATION</span><div class="document-stack"><div class="paper paper-back"></div><div class="paper paper-front"><span class="paper-logo">b.</span><strong>Ide besar.<br>Dokumen beres.</strong><div class="paper-rule"></div><div class="paper-rule short"></div><span class="paper-bottom">buatdokumen.id <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18 18 6M6 6h12v12"/></svg></span></div></div><span class="art-caption">CV · SURAT · INVOICE</span><span class="art-symbol"><svg class="asterisk-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 2v44M2 24h44M8 8l32 32M8 40 40 8"/></svg></span></div>
                     <div class="project-featured-head">
                         <div class="project-meta">
                             <span class="project-category">Founder &middot; SaaS Produk Live</span>
@@ -501,7 +466,8 @@ export default function PayrollDashboard() {
                 </article>
 
                 <!-- Project 1: Payroll System -->
-                <article class="project-card reveal" id="project-payroll">
+                <article class="project-card reveal" id="project-payroll" data-category="fullstack">
+                    <div class="project-art payroll-art" aria-hidden="true"><span class="art-label">02 / SYSTEM EXPLORATION</span><div class="mini-dashboard"><div class="mini-sidebar">P<span>⌘</span><span>▤</span><span>▥</span></div><div class="mini-main"><span>Payroll overview</span><strong>Sistem penggajian</strong><div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>GAJI &nbsp; / &nbsp; BPJS &nbsp; / &nbsp; PPH21</span></div></div><span class="art-caption">CODEIGNITER 4 × MYSQL</span></div>
                     <div class="project-meta">
                         <span class="project-category">Enterprise &amp; FinTech</span>
                         <h3 class="project-name">Sistem Payroll</h3>
@@ -589,7 +555,8 @@ export default function PayrollDashboard() {
                 </article>
 
                 <!-- Project 2: MERN Stack Project -->
-                <article class="project-card reveal reveal-delay-1" id="project-mern">
+                <article class="project-card reveal reveal-delay-1" id="project-mern" data-category="fullstack">
+                    <div class="project-art mern-art" aria-hidden="true"><span class="art-label">03 / FULLSTACK EXPLORATION</span><div class="mern-nodes"><span class="mern-node">M<small>MongoDB</small></span><span class="mern-node">E<small>Express</small></span><span class="mern-node">R<small>React</small></span><span class="mern-node">N<small>Node.js</small></span></div><span class="art-caption">ONE CONNECTED ECOSYSTEM</span></div>
                     <div class="project-meta">
                         <span class="project-category">Fullstack &amp; Modern Web</span>
                         <h3 class="project-name">MERN Stack Applications</h3>
@@ -685,7 +652,7 @@ export default function PayrollDashboard() {
         <!-- Professional Timeline Section -->
         <section id="timeline" class="section timeline-section">
             <div class="section-header reveal">
-                <h2 class="section-title">Pengalaman &amp; Pendidikan</h2>
+                <span class="section-eyebrow">03 / MY JOURNEY</span><h2 class="section-title">Terus belajar.<br>Terus berkembang.</h2>
                 <p class="section-desc">Perjalanan karir dan pendidikan saya.</p>
             </div>
 
@@ -756,7 +723,7 @@ export default function PayrollDashboard() {
         <!-- Contact Section -->
         <section id="contact" class="section contact-section">
             <div class="section-header reveal">
-                <h2 class="section-title">Hubungi Saya</h2>
+                <span class="section-eyebrow">04 / LET’S CONNECT</span><h2 class="section-title">Punya ide menarik?<br>Mari kita wujudkan<span class="title-period">.</span></h2>
                 <p class="section-desc">Tertarik untuk bekerja sama? Silakan hubungi saya melalui form atau kontak di
                     bawah.</p>
             </div>
@@ -895,12 +862,13 @@ export default function PayrollDashboard() {
     <footer class="footer">
         <div class="footer-container">
             <span class="footer-copy">&copy; 2026 Muhammad Zidhan Fadillah. All rights reserved.</span>
-            <span class="footer-design">Clean &amp; Professional &bull; Built with HTML, CSS &amp; JS</span>
+            <span class="footer-design">Crafted with code &amp; curiosity. <a href="#about">Kembali ke atas ↑</a></span>
         </div>
     </footer>
 
     <!-- Script file -->
     <script src="app.js"></script>
+    <script src="experience.js"></script>
 </body>
 
 </html>

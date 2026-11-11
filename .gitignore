@@ -22,3 +22,4 @@ projects_payroll_fitur_utama*
 *.webp
 *.png
 !profile-photo.png
+!profile-thumb.webp
