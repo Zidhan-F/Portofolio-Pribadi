@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const layers = {
         frontend: { stack: "'React.js'", description: 'React.js · Antarmuka responsif, dari ide menjadi interaksi.' },
         backend: { stack: "'Node.js / CI4'", description: 'Node.js, Laravel & CodeIgniter 4 · Logika aplikasi dan REST API.' },
-        database: { stack: "'MongoDB / MySQL'", description: 'MongoDB & MySQL · Data terstruktur untuk aplikasi fullstack.' }
+        database: { stack: "'MongoDB / MySQL'", description: 'MongoDB, MySQL & PostgreSQL · Data terstruktur untuk aplikasi fullstack.' }
     };
     const layerButtons = [...document.querySelectorAll('.scene-controls button')];
     layerButtons.forEach(button => button.addEventListener('click', () => {

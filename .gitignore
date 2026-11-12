@@ -19,7 +19,3 @@ terminal_about_output*
 terminal_about_output_verified*
 projects_tabs_view*
 projects_payroll_fitur_utama*
-*.webp
-*.png
-!profile-photo.png
-!profile-thumb.webp

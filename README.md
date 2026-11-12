@@ -12,6 +12,7 @@ Buka `http://localhost:4173`.
 
 ## Struktur
 
+- `DESIGN.md`: design system monokrom (token warna, tipografi, aturan gerak) yang wajib diikuti setiap perubahan UI.
 - `index.html`: profil, proyek, pengalaman, kontak, dan komposisi 3D.
 - `style.css`: gaya dasar, komponen, tema, dan aksesibilitas.
 - `experience.css`: desain spasial, ilustrasi proyek, dan breakpoint responsif.

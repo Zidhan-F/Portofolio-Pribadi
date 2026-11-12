@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tema awal sudah diterapkan oleh skrip inline di <head> (mencegah kedipan).
     const root = document.documentElement;
     const themeToggle = document.getElementById('theme-toggle');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const safeStorage = {
         get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
@@ -93,26 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleNavScroll();
 
     // ==========================================
-    // 4. Background Code Snippets Parallax
-    // ==========================================
-    const snippets = document.querySelectorAll('.code-snippet');
-    
-    if (snippets.length > 0 && window.innerWidth > 768 && !prefersReducedMotion) {
-        window.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            snippets.forEach((snippet, index) => {
-                const speed = (index + 1) * 10;
-                const moveX = (mouseX - 0.5) * speed;
-                const moveY = (mouseY - 0.5) * speed;
-                snippet.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
-        }, { passive: true });
-    }
-
-    // ==========================================
-    // 5. Tab Switches for Project Cards
+    // 4. Tab Switches for Project Cards
     // ==========================================
     const tabContainers = document.querySelectorAll('.tab-container');
     
@@ -166,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 6. Contact Form Validation
+    // 5. Contact Form Validation
     // ==========================================
     const contactForm = document.getElementById('portfolio-contact-form');
     const successFeedback = document.getElementById('form-success-feedback');
@@ -184,10 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
             [messageInput, v => v.length > 0]
         ];
 
+        // Pesan error hanya dihubungkan ke input saat memang tampil, agar
+        // screen reader tidak membacakan error pada isian yang sudah benar.
+        rules.forEach(([input]) => {
+            input.dataset.errorId = input.getAttribute('aria-describedby') || '';
+            input.removeAttribute('aria-describedby');
+        });
+
         const validateField = (input, test) => {
             const ok = test(input.value.trim());
             input.closest('.form-group').classList.toggle('invalid', !ok);
             input.setAttribute('aria-invalid', String(!ok));
+            if (ok || !input.dataset.errorId) input.removeAttribute('aria-describedby');
+            else input.setAttribute('aria-describedby', input.dataset.errorId);
             return ok;
         };
 
@@ -248,75 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 7. Interactive Terminal
-    // ==========================================
-    const termInput = document.getElementById('terminal-input');
-    const termOutput = document.getElementById('terminal-output');
-    const termBody = document.getElementById('terminal-body');
-
-    if (termInput && termOutput && termBody) {
-        termInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const rawCommand = termInput.value;
-                const command = rawCommand.trim().toLowerCase();
-                termInput.value = '';
-
-                if (!command) return;
-
-                const userLine = document.createElement('p');
-                userLine.className = 'terminal-log log-success';
-                userLine.innerHTML = `<span class="terminal-prompt">zidhan@portfolio:~$</span> ${rawCommand}`;
-                termOutput.appendChild(userLine);
-
-                const responseLine = document.createElement('p');
-                responseLine.className = 'terminal-log';
-
-                switch (command) {
-                    case 'help':
-                        responseLine.innerHTML = `Commands:<br> - <span class="text-highlight">about</span> : Tentang saya<br> - <span class="text-highlight">stack</span> : Tech stack<br> - <span class="text-highlight">contact</span> : Info kontak<br> - <span class="text-highlight">experience</span> : Pengalaman kerja<br> - <span class="text-highlight">education</span> : Pendidikan<br> - <span class="text-highlight">clear</span> : Bersihkan terminal`;
-                        break;
-                    case 'about':
-                        responseLine.textContent = 'Muhammad Zidhan Fadillah — Junior Web Developer & Mahasiswa S1 Teknik Informatika di Universitas Dian Nusantara (UNDIRA). Berpengalaman dalam MERN Stack & CodeIgniter 4 untuk membangun aplikasi web fullstack.';
-                        break;
-                    case 'stack':
-                        responseLine.innerHTML = `<pre style="font-family: var(--font-mono); margin: 0.25rem 0;">{
-  "frontend": ["React.js", "HTML5", "CSS3", "JavaScript"],
-  "backend": ["Node.js", "Express.js", "CodeIgniter 4", "Laravel", "PHP"],
-  "database": ["MongoDB", "MySQL"]
-}</pre>`;
-                        break;
-                    case 'contact':
-                        responseLine.innerHTML = `Email: <span class="text-highlight">muzidhan@gmail.com</span><br>Phone: (+62) 812-1878-4571<br>GitHub: <span class="text-highlight">github.com/Zidhan-F</span><br>LinkedIn: <span class="text-highlight">linkedin.com/in/muhammadzidhanfadillah</span><br>Location: Jakarta Barat, Indonesia`;
-                        break;
-                    case 'experience':
-                        responseLine.innerHTML = `1. <span class="text-highlight">PT Dinamika Agung</span> — Junior Web Developer (Internship)<br>   Apr 2026 - Jul 2026 | Fullstack Payroll System<br>2. <span class="text-highlight">Favehotel LTC Glodok</span> — Housekeeping Attendant<br>   Mar 2023 - Apr 2026<br>3. <span class="text-highlight">Jayakarta Hotels</span> — Room Attendant (Part-time)<br>   Jan 2023 - Mar 2023`;
-                        break;
-                    case 'education':
-                        responseLine.innerHTML = `1. <span class="text-highlight">Universitas Dian Nusantara (UNDIRA)</span><br>   S1 Teknik Informatika | Agt 2023 - Sekarang<br>2. <span class="text-highlight">SMKN 60 Jakarta</span><br>   Housekeeping & Front Office Operation`;
-                        break;
-                    case 'clear':
-                        termOutput.innerHTML = '';
-                        return;
-                    default:
-                        responseLine.className = 'terminal-log log-error';
-                        responseLine.textContent = `bash: command not found: ${rawCommand}. Ketik 'help' untuk melihat commands.`;
-                }
-
-                termOutput.appendChild(responseLine);
-
-                setTimeout(() => {
-                    termBody.scrollTop = termBody.scrollHeight;
-                }, 10);
-            }
-        });
-
-        termBody.addEventListener('click', () => {
-            termInput.focus();
-        });
-    }
-
-    // ==========================================
-    // 8. Scroll Spy for Navigation
+    // 6. Scroll Spy for Navigation
     // ==========================================
     const allNavLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
@@ -347,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 9. Scroll Reveal Animations
+    // 7. Scroll Reveal Animations
     // ==========================================
     const revealElements = document.querySelectorAll('.reveal');
 
@@ -365,46 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         revealElements.forEach(el => revealObserver.observe(el));
-    }
-
-    // ==========================================
-    // 10. Animated Counter for Metrics
-    // ==========================================
-    const counters = document.querySelectorAll('[data-count]');
-
-    if (counters.length > 0 && !prefersReducedMotion) {
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = parseInt(entry.target.getAttribute('data-count'));
-                    animateCounter(entry.target, 0, target, 1200);
-                    counterObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-    }
-
-    function animateCounter(element, start, end, duration) {
-        const startTime = performance.now();
-        
-        function update(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Ease out quad
-            const eased = 1 - (1 - progress) * (1 - progress);
-            const current = Math.round(start + (end - start) * eased);
-            
-            element.textContent = current + '+';
-            
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-        
-        requestAnimationFrame(update);
     }
 
 });
