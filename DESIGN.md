@@ -36,8 +36,17 @@ Semua pasangan teks dan latar di atas lolos kontras WCAG AA (≥ 4.5:1 untuk tek
 - **Ukuran minimum:**
   - Teks yang dibaca (paragraf, tombol, link, tag): **≥ 12px**, paragraf utama **≥ 14px**.
   - Label dekoratif dengan `aria-hidden="true"` di dalam ilustrasi: **≥ 9px**.
+- **Panjang baris:** paragraf maksimal ~70 karakter (`max-width: 62ch`); heading pendek memakai `text-wrap: balance`.
+- **Hierarki heading:** berurutan `h1 → h2 → h3`, tanpa melompati level.
 
-## 4. Bentuk, bayangan, gerak
+## 4. Interaksi dan form
+
+- **Area sentuh:** kontrol utama (tab, filter, tombol) minimal **44×44px**; link di dalam paragraf cukup ≥ 24px (WCAG 2.5.8).
+- **Kolom wajib** ditandai `*` beserta catatan teks, bukan dengan warna.
+- **Validasi** dijalankan saat kolom ditinggalkan (blur) dan saat submit. Pesan error ditaruh di bawah kolom, menjelaskan cara memperbaikinya, dan dihubungkan lewat `aria-describedby` hanya selama error tampil.
+- **Saat mengirim**, tombol dinonaktifkan, labelnya berubah, dan diberi `aria-busy="true"`.
+
+## 5. Bentuk, bayangan, gerak
 
 - **Radius:** 6–10px untuk kontrol, 14–16px untuk kartu, dan pill hanya untuk tombol filter dan Resume.
 - **Bayangan:** hanya penanda elevasi (navbar saat scroll, ilustrasi 3D). Kartu biasa tetap datar dengan border.
@@ -46,9 +55,10 @@ Semua pasangan teks dan latar di atas lolos kontras WCAG AA (≥ 4.5:1 untuk tek
   - mengikuti `prefers-reduced-motion`,
   - bisa dijeda lewat tombol "Jeda animasi" (WCAG 2.2.2).
 
-## 5. Checklist sebelum merge
+## 6. Checklist sebelum merge
 
 - [ ] Tidak ada warna dengan hue (cek: R = G = B).
 - [ ] Teks yang dibaca ≥ 12px, paragraf ≥ 14px.
 - [ ] Tampilan benar di mode terang, gelap, dan lebar 375px tanpa scroll horizontal.
 - [ ] Semua kontrol bisa dioperasikan dengan keyboard dan punya fokus terlihat.
+- [ ] Audit axe-core (WCAG 2.2 AA) tanpa pelanggaran.

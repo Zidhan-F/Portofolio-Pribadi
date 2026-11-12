@@ -91,7 +91,7 @@ body { overflow-x: clip; }
 .skill-tag { background: var(--bg-secondary); font-size: 12px; border-color: transparent; }
 .project-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px; }
 .project-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-.project-filters button { min-height: 40px; padding: 10px 17px; border: 1px solid var(--border-color); border-radius: 30px; background: transparent; color: var(--text-secondary); font: 13px var(--font-sans); }
+.project-filters button { min-height: 44px; padding: 10px 17px; border: 1px solid var(--border-color); border-radius: 30px; background: transparent; color: var(--text-secondary); font: 13px var(--font-sans); }
 .project-filters button[aria-pressed="true"] { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
 .project-filters button span { font: 10px var(--font-mono); margin-left: 9px; }
 #project-count { font: 12px var(--font-mono); color: var(--text-muted); white-space: nowrap; }
@@ -125,7 +125,7 @@ body { overflow-x: clip; }
 .paper strong { display: block; font-size: 23px; letter-spacing: -.055em; line-height: 1.1; margin: 14px 0; }
 .paper-rule { width: 75%; height: 3px; margin-top: 9px; background: var(--border-color); }.paper-rule.short { width: 50%; }
 .paper-bottom { display: block; font: 9px var(--font-mono); margin-top: 19px; }
-.art-symbol { position: absolute; right: 14%; top: 30%; font-size: 100px; font-weight: 300; }
+.art-symbol { position: absolute; right: 14%; top: 30%; font-size: 100px; }
 .mini-dashboard { display: flex; width: 75%; max-width: 350px; height: 156px; position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%) rotateX(15deg) rotateY(-14deg) rotateZ(-6deg); background: var(--scene-paper); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 12px 16px 20px #0002; }
 .mini-sidebar { width: 40px; border-right: 1px solid var(--border-color); padding: 13px; font-size: 12px; font-weight: 700; }.mini-sidebar span { display: block; margin-top: 12px; font-size: 9px; color: var(--text-muted); }
 .mini-main { flex: 1; padding: 14px; }.mini-main > span { display: block; font: 8px var(--font-mono); color: var(--text-muted); }.mini-main strong { display: block; font-size: 13px; margin: 6px 0; }
@@ -293,3 +293,18 @@ html:not(.js) .scene-controls, html:not(.js) .motion-toggle, html:not(.js) .proj
 @keyframes node-lift { to { translate: 0 -9px 12px; rotate: y 11deg; } }
 @keyframes model-turn { to { transform: translateY(20px) rotateX(59deg) rotateZ(-12deg); } }
 @keyframes lift-roof { to { transform: translateZ(76px); } }
+
+/* ===========================
+   Review UI UX Pro Max: keterbacaan, interaksi, form
+   =========================== */
+/* Tap langsung tanpa jeda 300ms dan tanpa double-tap zoom pada kontrol. */
+a, button, [role="tab"], input, textarea { touch-action: manipulation; }
+/* Heading pendek terbagi seimbang; paragraf menghindari kata yatim di baris akhir. */
+.section-title, .hero-subtitle, .project-name, .timeline-content h3 { text-wrap: balance; }
+.project-desc, .tab-text, .section-desc, .timeline-content p, .hero-description { text-wrap: pretty; }
+/* Batasi panjang baris ~70 karakter pada kartu selebar penuh agar mudah dibaca. */
+.project-card .tab-text, .project-card .project-desc { max-width: 62ch; }
+/* Penanda kolom wajib: monokrom, dibedakan dengan simbol dan teks, bukan warna. */
+.required-mark { color: var(--text-primary); font-weight: 700; margin-left: 2px; }
+.form-required-note { font-size: .8125rem; color: var(--text-muted); margin: 0 0 4px; }
+.btn-submit[aria-busy="true"] { cursor: progress; }

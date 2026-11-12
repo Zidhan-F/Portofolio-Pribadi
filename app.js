@@ -12,11 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
         set(key, val) { try { localStorage.setItem(key, val); } catch (e) { /* storage diblokir */ } }
     };
 
+    // Warna bilah browser mobile mengikuti tema monokrom yang aktif.
+    const themeColorMetas = document.querySelectorAll('meta[name="theme-color"]');
+
     const applyTheme = (theme) => {
         if (theme === 'dark') root.setAttribute('data-theme', 'dark');
         else root.removeAttribute('data-theme');
         const isDark = theme === 'dark';
         themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeColorMetas.forEach(meta => meta.setAttribute('content', isDark ? '#121212' : '#ffffff'));
     };
 
     applyTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
@@ -180,8 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return ok;
         };
 
-        // Setelah ada error, validasi ulang saat pengguna memperbaikinya
+        // Validasi saat kolom ditinggalkan (bukan setiap ketikan), lalu validasi
+        // ulang secara langsung selama pengguna memperbaiki kolom yang error.
         rules.forEach(([input, test]) => {
+            input.addEventListener('blur', () => {
+                if (input.value.trim() !== '') validateField(input, test);
+            });
             input.addEventListener('input', () => {
                 if (input.getAttribute('aria-invalid') === 'true') validateField(input, test);
             });
@@ -208,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Mengirim...';
                 submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-busy', 'true');
                 
                 const formData = new FormData(contactForm);
                 fetch(contactForm.action, {
@@ -220,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
+                    submitBtn.removeAttribute('aria-busy');
                     if (response.ok) {
                         contactForm.reset();
                         showFeedback(successFeedback);
@@ -230,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
+                    submitBtn.removeAttribute('aria-busy');
                     showFeedback(errorFeedback);
                 });
             }
